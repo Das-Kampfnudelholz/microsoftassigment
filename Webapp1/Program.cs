@@ -1,10 +1,14 @@
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
+
 var settings = builder.Configuration.GetSection("Settings").Get<Settings>();
 
-// Add http client
-
+builder.Services.AddHttpClient("MyClient", client =>
+{
+    client.BaseAddress = new Uri("ttps://todoapi-35735216.azurewebsites.net/api/"); 
+    client.DefaultRequestHeaders.Add("ApiKey", settings.ApiKey); 
+});
 
 var app = builder.Build();
 
@@ -16,7 +20,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 
 app.UseRouting();
 

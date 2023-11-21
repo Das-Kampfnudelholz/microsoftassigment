@@ -20,9 +20,12 @@ namespace WebApp1.Pages
             {
                 throw new Exception();
             }
-            using HttpResponseMessage response = await _httpClient.DeleteAsync($"api/TodoItems/{id}");
             
-            //Use ViewData to return the status code
+            using HttpResponseMessage response = await _httpClient.DeleteAsync($"api/TodoItems/{id}");
+
+            // Use ViewData to store the status code for displaying it in the view
+            ViewData["StatusCode"] = (int)response.StatusCode;
+
 
         }
     }
