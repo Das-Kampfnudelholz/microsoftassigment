@@ -1,0 +1,64 @@
+﻿@page
+@model WebApp1.Pages.IndexAllModel
+@{
+    ViewData["Title"] = "Get all To do's";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PaginatedItems[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaginatedItems[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaginatedItems[0].AssignedUserUpn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaginatedItems[0].IsComplete)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PaginatedItems)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignedUserUpn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsComplete)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.PaginatedItems.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.PaginatedItems.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./IndexAll"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.PaginatedItems.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./IndexAll"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.PaginatedItems.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
